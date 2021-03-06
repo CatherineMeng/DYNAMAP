@@ -18,41 +18,29 @@ Dynamic Algorithm Mapping for CNN inference
 1. Download the Algorithm Mapper
 
 2. Go to directory pbqp/src and type
-
-```
-
+'''
     make
     make install
     cd ..
-
-```
+'''
    
 3. Run the CNN graph construction script:
 
-
-```
+'''
     python cnn_const.py
-```
+'''
 
 	1. The program will ask for inputs about device capabilities, model name and CNN metadata. We provide preset config files for Inception modules.
 	2. A config file with model name will be created in the "pbqp/testcases" folder.
 4. Run the PBQP solver
-
-```
+'''
     ./run_test
-```
-
+'''
 5. Dump files for the reduction (including topology graphs for intermediate steps) can be produced by 
-
-```
+'''
     ./build_dump input_file
-```
-
+'''
 where input_file is the input file(s) in the test case directory. The dump can be found in the pbqp/dump folder. Open index.html to view the complete results
 
-## Hardware Generation
 
-- Dependency: 
-	- VITIS HLS
-	- Vivado 
 

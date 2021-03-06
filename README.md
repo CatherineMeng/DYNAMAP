@@ -10,7 +10,7 @@ Dynamic Algorithm Mapping for CNN inference
     - [Perl HTML Tag-Reader](http://pepper.linuxfocus.org/~guido/index.html#TagReader)
     - TeX system
     - [Tex to GIF](http://www.fourmilab.ch/webtools/textogif/textogif.html)
-    - Graphviz](http://www.graphviz.org/)
+    - [Graphviz](http://www.graphviz.org/)
     - The core graph reduction functions are from the open-source [C-based Solver](http://www.complang.tuwien.ac.at/scholz/pbqp.html). Make sure to download the modified src in the Algorithm Mapper directory for complete dump file display.
 
 ### Software Algorithm Mapper User Guide
@@ -20,11 +20,9 @@ Dynamic Algorithm Mapping for CNN inference
 2. Go to directory pbqp/src and type
 
 ```
-
     make
     make install
     cd ..
-
 ```
    
 3. Run the CNN graph construction script:
@@ -34,8 +32,9 @@ Dynamic Algorithm Mapping for CNN inference
     python cnn_const.py
 ```
 
-	1. The program will ask for inputs about device capabilities, model name and CNN metadata. We provide preset config files for Inception modules.
-	2. A config file with model name will be created in the "pbqp/testcases" folder.
+- The program will ask for inputs about device capabilities, model name and CNN metadata. We provide preset config files for Inception modules.
+- A config file with model name will be created in the "pbqp/testcases" folder.
+
 4. Run the PBQP solver
 
 ```

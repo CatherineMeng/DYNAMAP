@@ -3,35 +3,35 @@ Dynamic Algorithm Mapping for CNN inference
 
 ## Software Algorithm Mapping
 
-- System Requirement:
-	- GCC compiler under linux
-- Dependency:
-	- Python 3.7
-    - [Perl HTML Tag-Reader](http://pepper.linuxfocus.org/~guido/index.html#TagReader)
-    - TeX system
-    - [Tex to GIF](http://www.fourmilab.ch/webtools/textogif/textogif.html)
-    - Graphviz](http://www.graphviz.org/)
-    - The core graph reduction functions are from the open-source [C-based Solver](http://www.complang.tuwien.ac.at/scholz/pbqp.html). Make sure to download the modified src in the Algorithm Mapper directory for complete dump file display.
+- System Requirement: See README in the root directory
 
 ### Software Algorithm Mapper User Guide
 
-1. Download the Algorithm Mapper
+1. Run the CNN graph construction script:
 
-2. Go to directory pbqp/src and type
+'''
+    python cnn_const.py <Your_input_file>.in <Your_output_file>.in
+'''
+Note that the <Your_input_file>.in file is an input config file where you can specify your CNN model metadata,
+including the layer parameters (we use the notions in accordance with our paper, which is shown in the table below) and edge connections (i.e. layer ordering). 
+| Feature map size      | Kernel size | # input channels |# output channels|
+| :----:         |    :----:   |      :----:  | :----:  |
+| H1,H2      | K1,K2       |  C_in  |  C_out  |
+
+For each layer, specify the layer numbering (no requirement on specific order), the type of each layer (the program only considers the convolution layers "c" and depth/filter concatenation layers "d"), and two optional parameters: whether it is branching("fork")/merging("join") layer, and the outdegree(indegree) for the branching(merging) layers. 
+Fpr each edge, specify the end-node numbers in a new line.
+Our program performs node splitting and edge-reordering to automatically construct the PBQP graph and use the metadata to populate the node/edge cost vectors.
+
+An example input file for GoogleNet inception module is included [incep_gn.in].
+
+2. If everything is ok, the program will display "CNN GRAPH CONSTRUCTION COMPLETE" and drops an output <Your_output_file>.in file in the pbqp/testcases folder.
+
+3. Go to directory pbqp/src and type
 '''
     make
     make install
     cd ..
 '''
-   
-3. Run the CNN graph construction script:
-
-'''
-    python cnn_const.py
-'''
-
-	1. The program will ask for inputs about device capabilities, model name and CNN metadata. We provide preset config files for Inception modules.
-	2. A config file with model name will be created in the "pbqp/testcases" folder.
 4. Run the PBQP solver
 '''
     ./run_test

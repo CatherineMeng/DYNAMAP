@@ -9,9 +9,10 @@ Dynamic Algorithm Mapping for CNN inference
 
 1. Run the CNN graph construction script:
 
-'''
+```
     python cnn_const.py <Your_input_file>.in <Your_output_file>.in
-'''
+```
+
 Note that the <Your_input_file>.in file is an input config file where you can specify your CNN model metadata,
 including the layer parameters (we use the notions in accordance with our paper, which is shown in the table below) and edge connections (i.e. layer ordering). 
 | Feature map size      | Kernel size | # input channels |# output channels|
@@ -27,19 +28,23 @@ An example input file for GoogleNet inception module is included [incep_gn.in].
 2. If everything is ok, the program will display "CNN GRAPH CONSTRUCTION COMPLETE" and drops an output <Your_output_file>.in file in the pbqp/testcases folder.
 
 3. Go to directory pbqp/src and type
-'''
+
+```
     make
     make install
     cd ..
-'''
+```
+
 4. Run the PBQP solver
-'''
+
+```
     ./run_test
-'''
+```
+
 5. Dump files for the reduction (including topology graphs for intermediate steps) can be produced by 
-'''
+```
     ./build_dump input_file
-'''
+```
 where input_file is the input file(s) in the test case directory. The dump can be found in the pbqp/dump folder. Open index.html to view the complete results
 
 

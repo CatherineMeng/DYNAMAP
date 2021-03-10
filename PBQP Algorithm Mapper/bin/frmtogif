@@ -1,0 +1,27 @@
+#!/bin/sh
+##############################################################################
+# (c) 2003 by B. Scholz
+##############################################################################
+# Convert FRM file to GIF file 
+##############################################################################
+# $Id: frmtogif,v 1.1.1.1 2003/12/28 20:58:54 scholz Exp $
+##############################################################################
+# $Log: frmtogif,v $
+# Revision 1.1.1.1  2003/12/28 20:58:54  scholz
+# Imported sources
+#
+##############################################################################
+bname=`basename $1 .frm`
+name="$bname.tex"
+echo >$name
+echo '\documentclass[10pt]{article}' >>$name
+echo '\usepackage{amsmath}' >>$name
+echo '\pagestyle{empty}' >>$name
+echo '\\begin{document}' >>$name
+echo -n '\\begin{displaymath}' >>$name
+cat $1 >>$name
+echo '\\end{displaymath}' >>$name
+echo '\\end{document}' >>$name
+textogif $name >/dev/null 2>/dev/null
+rm -rf $name 
+rm -rf $1

@@ -1,0 +1,93 @@
+#!/bin/bash
+##############################################################################
+# (c) 2003 by B. Scholz
+##############################################################################
+# Solve Testcases 
+##############################################################################
+# $Id: run_test,v 1.1.1.1 2003/12/28 20:58:54 scholz Exp $
+##############################################################################
+# $Log: run_test,v $
+# Revision 1.1.1.1  2003/12/28 20:58:54  scholz
+# Imported sources
+#
+##############################################################################
+# set path
+export PATH=$PATH:`pwd`/bin
+
+function check_result
+{
+   cat $1 >/tmp/$$.in
+   cat $2 >>/tmp/$$.in
+
+   pbqp_validate /tmp/$$.in
+   x=$?
+   if [ ! $x -eq 0 ]
+   then
+      echo " result of solver is incorrect"
+   fi
+   rm -f /tmp/$$.in
+}
+ 
+# make executables
+echo "---------------------------------------------------------------------"
+echo "run tests"
+num=0
+optnum=0
+numdev=0
+absdev=0
+cd testcases/
+for f in *.in
+do 
+   echo "---------------------------------------------------------------------"
+   echo "testcase $f"
+   echo 
+   base=`basename $f .in`
+   echo "solve $base with brute force approach"
+   pbqp_solve $f bf  >$base.bruteforce
+   check_result $f $base.bruteforce
+   echo "solve $base with heuristical approach"
+   pbqp_solve $f h >$base.h
+   check_result $f $base.h
+   bf=`tail -n 2 -q $base.bruteforce | head -n 1 -q` 
+   he=`tail -n 2 -q $base.h | head -n 1 -q` 
+   # is heuristical solution optimal
+   ho=`tail -n 1 -q $base.h`
+   if [ $ho -eq 1 ]
+   then
+      if [ $bf -eq $he ] 
+      then
+        echo "  optimal solution" 
+        optnum=$((optnum+1)) 
+      else 
+        echo "  -----------------------"
+        echo "  wrong optimal solution!"
+        echo "  -----------------------"
+      fi
+   else 
+      echo "  might be non-optimal solution "
+      if [ $bf -eq $he ] 
+      then
+        echo "    achieved optimal solution" 
+        optnum=$((optnum+1)) 
+      else
+        dev=$((he-bf))
+        dev=$((dev*1000))
+        dev=$((dev/he))
+        absdev=$((absdev+dev))
+        numdev=$((numdev+1))
+        echo "    deviation $dev"
+      fi
+      
+   fi
+   num=$((num+1)) 
+done
+if [ $numdev -eq 0 ]
+then
+  avg=0
+else
+  avg=$((absdev/numdev))
+  avg=$((avg/10))
+fi
+echo "testcases:$num"
+echo "testcases with optimal solution:$optnum"
+echo "deviation of non-optimal solution in %:$avg" 

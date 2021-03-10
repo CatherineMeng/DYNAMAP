@@ -1,0 +1,65 @@
+#!/usr/bin/perl -w
+##############################################################################
+# (c) 2003 by B. Scholz
+##############################################################################
+# Convert HTML file with tex and dot tags to html file with images 
+##############################################################################
+# $Id: convert_xhtml,v 1.1.1.1 2003/12/28 20:58:54 scholz Exp $
+##############################################################################
+# $Log: convert_xhtml,v $
+# Revision 1.1.1.1  2003/12/28 20:58:54  scholz
+# Imported sources
+#
+##############################################################################
+use HTML::TagReader;
+#
+($infile,$outfile)=@ARGV;
+my $dotnow=0;
+my $texnow=0;
+my $imgctr=1;
+my ($tagOrText,$tagtype,$linenumber,$column);
+open(CMD, ">cmd");
+open(HTML, ">$outfile");
+print CMD "#!/bin/sh\n";
+#print CMD "rm -rf graph*.tex graph*.frm graph*.gif\n";
+#
+my $p=new HTML::TagReader "$infile";
+# read the file with getbytoken:
+while(($tagOrText,$tagtype,$linenumber,$column) = $p->getbytoken(0)){
+    if ($tagtype eq "graph"){
+     $dotnow=1;
+     open(GRAPH, ">img$imgctr.dot");
+     next;
+    }
+    if ($tagtype eq "/graph" ){
+      $dotnow=0;
+      close(GRAPH);
+      print CMD "dottogif img$imgctr.dot\n";
+      print HTML "<img src=\"img$imgctr.gif\">\n";
+      $imgctr=$imgctr+1;
+      next;
+    }
+    if ($tagtype eq "tex"){
+     $texnow=1;
+     open(TEX, ">img$imgctr.frm");
+     next;
+    }
+    if ($tagtype eq "/tex" ){
+      $texnow=0;
+      close(TEX);
+      print CMD "frmtogif img$imgctr.frm\n";
+      print HTML "<img src=\"img$imgctr.gif\">\n";
+      $imgctr=$imgctr+1;
+      next;
+    }
+    if ($dotnow eq 1) {
+       print GRAPH $tagOrText;
+    } elsif ($texnow eq 1) {
+       print TEX $tagOrText;
+    } else {
+       print HTML $tagOrText;
+    }
+}
+close(CMD);
+close(HTML);
+exec 'cat cmd|sh';

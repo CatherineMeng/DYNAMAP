@@ -1,0 +1,29 @@
+The author of this software is Bernhard Scholz.
+
+Copyright (c) 2003 by Bernhard Scholz. All Rights Reserved.
+
+Permission to use, copy, modify, and distribute this software for any
+purpose, subject to the provisions described below, without fee is
+hereby granted, provided that this entire notice is included in all
+copies of any software that is or includes a copy or modification of
+this software and in all copies of the supporting documentation for
+such software.
+
+THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTY. IN PARTICULAR, THE AUTHOR DOES NOT MAKE ANY REPRESENTATION OR 
+WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY OF THIS SOFTWARE OR 
+ITS FITNESS FOR ANY PARTICULAR PURPOSE.
+
+The PBQP library is not public-domain software, shareware, and it is not 
+protected by a `copyleft' agreement, like the code from the Free Software
+Foundation.
+
+The PBQP library is available free for your personal research and 
+instructional use under the `fair use' provisions of the copyright law. 
+
+You may not sell the PBQP library or any product derived from it in 
+which it is a significant part of the value of the product.
+
+-----
+Bernhard Scholz / scholz@complang.tuwien.ac.at 
+$Revision: 1.1.1.1 $ $Date: 2003/12/28 20:58:54 $

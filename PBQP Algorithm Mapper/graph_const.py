@@ -274,7 +274,7 @@ if __name__ == "__main__":
 	print("Populating edge costs: Done! :D")
 
 	fr.close()
-	fw = open("dump/"+output_name, "w")
+	fw = open("testcases/"+output_name, "w")
 
 	fw.write("%d \n" %len(v_node_cost)) #num nodes
 	fw.write("%d \n" %len(edge_list))   #num edges
